@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic List Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input{
+            padding:8px;
+            width:200px;
+        }
+        button{
+            padding:8px 12px;
+            margin-left:5px;
+            cursor:pointer;
+        }
+        ul{
+            list-style-type:none;
+            padding:0;
+            margin-top:20px;
+        }
+        li{
+            padding:10px;
+            margin:8px auto;
+            width:250px;
+            background:#f2f2f2;
+            border-radius:5px;
+        }
+        li:hover{
+            background-color:lightblue;
+        }
+        .deleteBtn{
+            float:right;
+            background:red;
+            color:white;
+            border:none;
+            padding:5px 8px;
+            border-radius:3px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Dynamic List Manager</h2>
+
+<input type="text" id="itemInput" placeholder="Enter item">
+<button id="addBtn">Add Item</button>
+
+<ul id="itemList"></ul>
+
+<script>
+$(document).ready(function(){
+
+    $("#addBtn").click(function(){
+        var item = $("#itemInput").val();
+
+        if(item !== ""){
+            $("#itemList").append(
+                "<li>" + item + 
+                "<button class='deleteBtn'>Delete</button></li>"
+            );
+            $("#itemInput").val("");
+        }
+    });
+
+    $("#itemList").on("click", ".deleteBtn", function(){
+        $(this).parent().remove();
+    });
+
+});
+</script>
+
+</body>
+</html>

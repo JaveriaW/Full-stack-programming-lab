@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chained Style Editor</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            text-align:center;
+            margin-top:50px;
+        }
+        #textBlock{
+            width:60%;
+            margin:20px auto;
+            padding:20px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            transition:0.3s;
+        }
+        button{
+            padding:8px 15px;
+            margin:5px;
+            cursor:pointer;
+        }
+        .bold{
+            font-weight:bold;
+        }
+        .italic{
+            font-style:italic;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Chained Style Editor</h2>
+
+<div id="textBlock">
+    This is a sample text. Use buttons below to apply styles dynamically using jQuery chaining.
+</div>
+
+<button id="increaseFont">Increase Font</button>
+<button id="changeColor">Change Color</button>
+<button id="changeBg">Change Background</button>
+<button id="toggleBold">Toggle Bold</button>
+<button id="toggleItalic">Toggle Italic</button>
+<button id="applyAll">Apply Multiple Styles</button>
+
+<script>
+$(document).ready(function(){
+
+    var fontSize = 16;
+
+    $("#increaseFont").click(function(){
+        fontSize += 2;
+        $("#textBlock").css("font-size", fontSize + "px");
+    });
+
+    $("#changeColor").click(function(){
+        $("#textBlock").css("color","white");
+    });
+
+    $("#changeBg").click(function(){
+        $("#textBlock").css("background-color","purple");
+    });
+
+    $("#toggleBold").click(function(){
+        $("#textBlock").toggleClass("bold");
+    });
+
+    $("#toggleItalic").click(function(){
+        $("#textBlock").toggleClass("italic");
+    });
+
+    $("#applyAll").click(function(){
+        $("#textBlock")
+            .css("font-size","22px")
+            .css("color","white")
+            .css("background-color","darkblue")
+            .toggleClass("bold")
+            .toggleClass("italic");
+    });
+$("#textBlock")
+    .css("font-size","22px")
+    .css("color","white")
+    .css("background-color","darkblue")
+    .toggleClass("bold")
+    .toggleClass("italic");
+});
+</script>
+
+</body>
+</html>

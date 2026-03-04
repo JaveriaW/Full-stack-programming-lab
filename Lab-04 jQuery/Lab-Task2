@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animated Image Gallery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body{
+            text-align:center;
+            font-family:Arial;
+            margin-top:50px;
+        }
+        img{
+            width:400px;
+            height:250px;
+            display:none;
+            border-radius:8px;
+        }
+        button{
+            padding:8px 15px;
+            margin:10px;
+            cursor:pointer;
+        }
+        #caption{
+            font-size:18px;
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Animated Image Gallery</h2>
+
+<img id="galleryImage">
+<p id="caption"></p>
+
+<button id="prevBtn">Previous</button>
+<button id="nextBtn">Next</button>
+
+<script>
+$(document).ready(function(){
+
+    var images = [
+        {src:"https://picsum.photos/400/250?random=1", caption:"Beautiful Nature"},
+        {src:"https://picsum.photos/400/250?random=2", caption:"Mountain View"},
+        {src:"https://picsum.photos/400/250?random=3", caption:"Peaceful Lake"}
+    ];
+
+    var index = 0;
+
+    function showImage(){
+        $("#galleryImage")
+            .fadeOut(300, function(){
+                $(this)
+                    .attr("src", images[index].src)
+                    .fadeIn(300);
+            });
+
+        $("#caption").text(images[index].caption);
+    }
+
+    showImage();
+
+    $("#nextBtn").click(function(){
+        index = (index + 1) % images.length;
+        showImage();
+    });
+
+    $("#prevBtn").click(function(){
+        index = (index - 1 + images.length) % images.length;
+        showImage();
+    });
+
+});
+</script>
+
+</body>
+</html>
