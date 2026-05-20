@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AeroCast | Premium Weather Forecast REST API Dashboard</title>
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- CSS Styling -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-default">
+  
+  <!-- Background Ambient Glows -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+          <path d="M17.5 19A3.5 3.5 0 0 0 21 15.5c0-2.79-2.54-4.5-5-4.5-.47-.47-1.12-.95-1.8-1.2A5.5 5.5 0 0 0 4 11.5a4.5 4.5 0 0 0 2 8.5z"/>
+        </svg>
+        <h1>AeroCast</h1>
+      </div>
+      <p class="tagline">REST API Powered Real City Weather Engine</p>
+    </header>
+
+    <!-- Main Section -->
+    <main class="main-card glass">
+      <!-- Search Form -->
+      <form id="search-form" class="search-form">
+        <div class="search-input-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="city-input" 
+            placeholder="Enter city name... (e.g. Paris, Tokyo, London)" 
+            required 
+            autocomplete="off"
+          />
+        </div>
+        <button type="submit" class="btn-search">Search</button>
+      </form>
+
+      <!-- Quick Select Cities -->
+      <div class="quick-cities">
+        <button type="button" class="btn-quick" data-city="London">London</button>
+        <button type="button" class="btn-quick" data-city="New York">New York</button>
+        <button type="button" class="btn-quick" data-city="Tokyo">Tokyo</button>
+        <button type="button" class="btn-quick" data-city="Sydney">Sydney</button>
+        <button type="button" class="btn-quick" data-city="Cairo">Cairo</button>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div id="loader" class="loader-container hidden">
+        <div class="spinner"></div>
+        <p>Polling real-time API forecast...</p>
+      </div>
+
+      <!-- Error Message Banner -->
+      <div id="error-card" class="error-card glass-error hidden">
+        <div class="error-header">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="error-icon">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <h3>Search Failure</h3>
+        </div>
+        <p id="error-message">Could not find that city. Please verify your spelling.</p>
+      </div>
+
+      <!-- Weather Presentation Card -->
+      <div id="weather-card" class="weather-card hidden">
+        <div class="weather-main-row">
+          <div class="weather-meta">
+            <h2 id="weather-city">Paris, FR</h2>
+            <p id="weather-condition" class="condition-badge">Cloudy</p>
+          </div>
+          <div class="weather-visual">
+            <img id="weather-icon" src="https://openweathermap.org/img/wn/04d@4x.png" alt="Weather condition icon" />
+          </div>
+        </div>
+
+        <div class="temp-display">
+          <span id="weather-temp">18</span><span class="temp-unit">°C</span>
+        </div>
+
+        <!-- Weather Stats Grid -->
+        <div class="stats-grid">
+          <!-- Humidity -->
+          <div class="stat-box glass-stat">
+            <div class="stat-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stat-icon text-blue">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Humidity</span>
+              <span id="weather-humidity" class="stat-value">65%</span>
+            </div>
+          </div>
+
+          <!-- Wind Speed -->
+          <div class="stat-box glass-stat">
+            <div class="stat-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stat-icon text-teal">
+                <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Wind Speed</span>
+              <span id="weather-wind" class="stat-value">4.5 m/s</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service Source Footer -->
+        <div class="api-meta">
+          <span class="meta-label">Data Source:</span>
+          <span id="weather-source" class="badge-source">OpenWeatherMap</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer API Explorer Info -->
+    <footer class="app-footer">
+      <p>Direct API Routes: 
+        <a href="/api/weather?city=London" target="_blank"><code>/api/weather?city=London</code></a> | 
+        <a href="/api/weather/Tokyo" target="_blank"><code>/api/weather/Tokyo</code></a>
+      </p>
+      <p class="copyright">&copy; 2026 AeroCast Engine • DeepMind Antigravity Pair</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript Application -->
+  <script src="app.js"></script>
+</body>
+</html>
