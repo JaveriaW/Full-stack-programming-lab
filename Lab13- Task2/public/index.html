@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlobalNews | Premium News Headlines REST API Dashboard</title>
+  <!-- Google Fonts: Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- CSS Styling -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Animated ambient glow backdrops -->
+  <div class="ambient-glow glow-blue"></div>
+  <div class="ambient-glow glow-pink"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+          <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path>
+          <path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"></path>
+        </svg>
+        <h1>GlobalNews</h1>
+        <span class="live-dot" title="Live REST connection"></span>
+      </div>
+      <p class="tagline">Dynamic Country-Based Real-Time News Stream Engine</p>
+    </header>
+
+    <!-- Main Controller Card -->
+    <section class="control-card glass">
+      <!-- Search Form -->
+      <form id="search-form" class="search-form">
+        <div class="search-input-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <input 
+            type="text" 
+            id="country-input" 
+            placeholder="Enter 2-letter country code... (e.g. us, jp, gb, in, fr, au)" 
+            maxlength="2" 
+            required 
+            autocomplete="off"
+          />
+        </div>
+        <button type="submit" class="btn-search">Stream</button>
+      </form>
+
+      <!-- Quick Country Selectors -->
+      <div class="quick-countries">
+        <button type="button" class="btn-quick" data-code="us">🇺🇸 United States</button>
+        <button type="button" class="btn-quick" data-code="gb">🇬🇧 United Kingdom</button>
+        <button type="button" class="btn-quick" data-code="jp">🇯🇵 Japan</button>
+        <button type="button" class="btn-quick" data-code="in">🇮🇳 India</button>
+        <button type="button" class="btn-quick" data-code="au">🇦🇺 Australia</button>
+        <button type="button" class="btn-quick" data-code="fr">🇫🇷 France</button>
+      </div>
+    </section>
+
+    <!-- Loading Indicator -->
+    <div id="loader" class="loader-container hidden">
+      <div class="spinner"></div>
+      <p>Synchronizing global news feeds...</p>
+    </div>
+
+    <!-- Error Card -->
+    <div id="error-card" class="error-card glass-error hidden">
+      <div class="error-header">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="error-icon">
+          <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <h3>API Stream Error</h3>
+      </div>
+      <p id="error-message">Unable to compile articles. Please check the country code.</p>
+    </div>
+
+    <!-- News Grid -->
+    <main id="news-grid" class="news-grid hidden">
+      <!-- Article Cards will be dynamically inserted here -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Direct API Routes: 
+        <a href="/api/news?country=us" target="_blank"><code>/api/news?country=us</code></a> | 
+        <a href="/api/news/gb" target="_blank"><code>/api/news/gb</code></a>
+      </p>
+      <p class="copyright">&copy; 2026 GlobalNews Engine • DeepMind Antigravity Pair</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript Controller -->
+  <script src="app.js"></script>
+</body>
+</html>
